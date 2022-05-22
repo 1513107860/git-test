@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+https://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        property 给属性采用set方法赋值
+    name : 属性名，调用该属性的set方法
+    value: 属性值，通过set方法赋值
+    ref: 属性是其他bean类型采用ref(字符串除外)
+    -->
+    <bean name="husband" class="com.briup.bean.Husband">
+        <property name="id" value="1"></property>
+        <property name="name" value="tom"></property>
+        <property name="salary" value="2000"></property>
+        <property name="date" ref="now"></property>
+    </bean>
+    <bean name="now" class="java.util.Date"></bean>
+
+</beans>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.ITeacherDao">
+    <insert id="insertTeacher" parameterType="Teacher">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select my_seq.nextVal from dual
+        </selectKey>
+        insert into teacher(id,name,age,salary)
+        values(#{id},#{name},#{age},#{salary})
+    </insert>
+
+    <select id="selectTeacherById" parameterType="int" resultType="Teacher">
+        select id,name,age,salary
+        from teacher
+        where id=#{id}
+    </select>
+</mapper>

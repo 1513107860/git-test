@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/springbeans.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/springaop.xsd">
+
+    <!-- 配置目标类到SpringIOC容器中-->
+    <bean name="roleService"
+          class="com.briup.aop.aspect.RoleServiceImpl"></bean>
+    <!-- 配置切面类到SpringIOC容器中-->
+    <bean name="myAspect" class="com.briup.aop.aspect.RoleAspect"></bean>
+    <!-- 配置aop -->
+    <aop:config>
+        <!-- 配置切入点，一组连接点的集合（Spring中就是一组方法的集合） -->
+        <!-- id: 切入点的唯一标识 -->
+        <!-- expression:切入点表达式 -->
+        <aop:pointcut id="myPointcut1" expression="execution(*
+com.briup.aop.aspect..*.*(..))"/>
+        <aop:pointcut id="myPointcut2" expression="execution(*
+com.briup.aop.aspect..*.print*(..))"/>
+        <!-- 配置切面 -->
+        <aop:aspect id="aspect" ref="myAspect">
+            <!-- 注意，切入点myPointcut1和myPointcut2分别代表俩组不同的连接点（方法） -->
+            <!-- 前置通知，会将切面类中的代码片段（beforAdvice方法）织入到myPointcut1中 -->
+            <aop:before method="before" pointcut-ref="myPointcut1">
+            </aop:before>
+            <!-- 最终通知，会将切面类中的代码片段（after方法）织入到myPointcut1中 -->
+            <aop:after method="after" pointcut-ref="myPointcut1"/>
+            <!-- 后置通知，会将切面类中的代码片段（afterReturn方法）织入到myPointcut1中 -->
+            <aop:after-returning method="afterReturning" pointcut-ref="myPointcut1"/>
+            <!-- 环绕通知，会将切面类中的代码片段（around方法）织入到myPointcut1中 -->
+            <aop:around method="around" pointcut-ref="myPointcut1"/>
+            <!-- 异常通知，会将切面类中的代码片段（throwable方法）织入到myPointcut2中 -->
+            <aop:after-throwing method="afterThrowing" pointcut-ref="myPointcut2"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
